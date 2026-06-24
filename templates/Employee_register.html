@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Create Account - ExpenseApp</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        :root {
+            --primary-color: #48bb78;
+            --bg-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-gradient);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .register-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 40px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 20px 25px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+
+        .register-card h2 { color: #2d3748; margin-bottom: 20px; }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            box-sizing: border-box;
+        }
+
+        input:focus { border-color: var(--primary-color); outline: none; }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 16px;
+            transition: 0.2s;
+        }
+
+        button:hover { background: #38a169; transform: translateY(-1px); }
+
+        .login-link { margin-top: 20px; display: block; color: #4a5568; text-decoration: none; font-size: 14px; }
+        .success { color: #2f855a; background: #f0fff4; padding: 10px; border-radius: 8px; margin-top: 10px; }
+        .error { color: #c53030; background: #fff5f5; padding: 10px; border-radius: 8px; margin-top: 10px; }
+    </style>
+</head>
+<body>
+<div class="register-card">
+    <h2>Join the Team</h2>
+    <form method="POST">
+        <input type="text" name="name" placeholder="Full Name" required>
+        <input type="email" name="email" placeholder="Email Address" required>
+        <input type="password" name="password" placeholder="Create Password" required>
+        <input type="text" name="code" maxlength="6" placeholder="6-Digit Company Code" required>
+        <button type="submit">Register</button>
+    </form>
+    {% if error %} <div class="error">{{ error }}</div> {% endif %}
+    {% if success %} <div class="success">{{ success }}</div> {% endif %}
+    <a href="/employee_login" class="login-link">Already have an account? Sign In</a>
+</div>
+</body>
+</html>

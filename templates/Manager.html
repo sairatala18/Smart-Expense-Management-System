@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manager Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            display: flex;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 240px;
+            height: 100vh;
+            background: #2c3e50;
+            color: white;
+            position: fixed;
+            padding-top: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .sidebar a {
+            display: block;
+            padding: 15px;
+            color: white;
+            text-decoration: none;
+            border-bottom: 1px solid #34495e;
+            cursor: pointer;
+        }
+
+        .sidebar a:hover {
+            background: #34495e;
+        }
+
+        /* Sidebar Active Link Style */
+        .sidebar a.active {
+            background: #1a252f !important; /* Slightly darker than sidebar for depth */
+            border-left: 5px solid #4CAF50 !important; /* Bold Green accent */
+            color: #4CAF50 !important; /* Text turns green to match accent */
+            font-weight: bold;
+        }
+        /* Main content */
+        .content {
+            margin-left: 240px;
+            padding: 30px;
+            width: 100%;
+            background: #f4f6f9;
+            min-height: 100vh;
+        }
+
+        .cards {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            flex: 1;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .card h3 {
+            margin: 0;
+            font-size: 28px;
+            color: #4CAF50;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #4CAF50;
+            color: white;
+            padding: 10px;
+        }
+
+        td {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        button {
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            color: white;
+            border-radius: 4px;
+        }
+
+        .status-approved{
+            color:green;
+            font-weight:bold;
+            }
+
+        .status-rejected{
+            color:red;
+            font-weight:bold;
+            }
+
+            .status-pending{
+            color:orange;
+            font-weight:bold;
+            }
+
+            /* Action Button Base Style */
+.btn-action {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    color: white;
+    transition: background 0.3s ease;
+}
+
+/* Approve Button Color (Green) */
+.btn-approve {
+    background-color: #27ae60 !important;
+}
+.btn-approve:hover {
+    background-color: #1e8449 !important;
+}
+
+/* Reject Button Color (Red) */
+.btn-reject {
+    background-color: #e74c3c !important;
+    margin-left: 5px;
+}
+.btn-reject:hover {
+    background-color: #c0392b !important;
+}
+
+/* AI Scan Button Style */
+.btn-ai-scan {
+    background-color: #3498db;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+        .dot {
+        height: 10px;
+        width: 10px;
+        background-color: red;
+        border-radius: 50%;
+        display: none; 
+        margin-left: 8px;
+        vertical-align: middle;
+    }
+    /* Container for the overview cards */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+/* Individual Stat Card Design */
+.card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    text-align: center;
+    transition: all 0.3s ease;
+    border: 1px solid #edf2f7;
+    position: relative;
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+/* Accent lines on top of cards for color coding */
+.card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+}
+
+.card-total::before { background: #3498db; }    /* Blue */
+.card-pending-emp::before { background: #f1c40f; } /* Yellow */
+.card-pending-exp::before { background: #e74c3c; } /* Red */
+
+/* Typography for Stats */
+.card h3 {
+    margin: 10px 0;
+    font-size: 42px;
+    font-weight: 800;
+    color: #2d3748;
+}
+
+.card p {
+    margin: 0;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #718096;
+    font-weight: 600;
+}
+.tab-active {
+    background-color: #4CAF50 !important; /* The green color from your screenshot */
+    color: white !important;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 12px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 8px;
+    font-weight: 600;
+    transition: 0.3s;
+    background: #f8f9fa; /* Light gray for the inactive tab */
+    color: #718096;
+}
+/* Sidebar Active Link Style */
+.sidebar a.active {
+    background: #34495e;
+    border-left: 4px solid #4CAF50;
+    color: #4CAF50;
+    font-weight: bold;
+}
+
+/* Ensure the sidebar link layout accounts for the border */
+.sidebar a {
+    display: block;
+    padding: 15px 15px 15px 11px; /* Adjusted padding for the border */
+    color: white;
+    text-decoration: none;
+    border-bottom: 1px solid #34495e;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+    </style>
+</head>
+
+<body>
+
+<div class="sidebar">
+    <h2>Manager</h2>
+    <a id="nav-home" onclick="loadPage('home')">Home</a>
+    <a id="nav-expenses" onclick="loadPage('expenses')">Employee Expenses <span id="dot-sidebar-expenses" class="dot"></span></a>
+    <a id="nav-employees" onclick="loadPage('employees')">Manage Employees <span id="dot-sidebar-employees" class="dot"></span></a>
+    <a id="nav-past" onclick="loadPage('past')">Past Expenses</a>
+    <a id="nav-help" onclick="loadPage('help')">Help</a>
+    <a href="/logout">Logout</a>
+</div>
+
+<div class="content">
+<h2>Dashboard Overview</h2>
+
+<div class="cards">
+    <div class="card card-total">
+        <h3 id="totalEmployees">0</h3>
+        <p>Total Employees</p>
+    </div>
+
+    <div class="card card-pending-emp">
+        <h3 id="pendingEmployees">0</h3>
+        <p>Pending Approvals</p>
+    </div>
+
+    <div class="card card-pending-exp">
+        <h3 id="pendingExpenses">0</h3>
+        <p>Pending Expenses</p>
+    </div>
+</div>
+
+    <!-- DYNAMIC CONTENT AREA -->
+    <div id="mainContent">
+        <!-- Pages load here -->
+    </div>
+
+</div>
+
+<script src="https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script>
+
+function loadStats() {
+    fetch("/dashboard_stats")
+    .then(res => res.json())
+    .then(data => {
+        // Update the main dashboard cards
+        document.getElementById("totalEmployees").innerText = data.total_employees;
+        document.getElementById("pendingEmployees").innerText = data.pending_employees;
+        document.getElementById("pendingExpenses").innerText = data.pending_expenses;
+
+        // Update the Red Badge on the "New Requests" tab
+        const badge = document.getElementById("pending-emp-count");
+        if (badge) {
+            if (data.pending_employees > 0) {
+                badge.innerText = data.pending_employees;
+                badge.style.display = "inline-block";
+            } else {
+                badge.style.display = "none";
+            }
+        }
+
+        // Update Sidebar Dots
+        const expDot = document.getElementById("dot-sidebar-expenses");
+        const empDot = document.getElementById("dot-sidebar-employees");
+        if (expDot) expDot.style.display = data.pending_expenses > 0 ? "inline-block" : "none";
+        if (empDot) empDot.style.display = data.pending_employees > 0 ? "inline-block" : "none";
+    });
+}
+
+function loadPage(page) {
+    // 1. Remove 'active' class from all sidebar links
+    const allLinks = document.querySelectorAll('.sidebar a');
+    allLinks.forEach(link => link.classList.remove('active'));
+
+    // 2. Add 'active' class to the link that was clicked
+    // We search for the link whose ID matches 'nav-' + page
+    const activeLink = document.getElementById('nav-' + page);
+    if (activeLink) {
+        activeLink.classList.add('active');
+    }
+
+    let url = "";
+    if (page === "home") url = "/home_partial";
+    if (page === "expenses") url = "/manager_expenses_partial";
+    if (page === "employees") url = "/manage_employees_partial";
+    if (page === "past") url = "/past_expenses_partial";
+    if (page === "help") url = "/help_partial";
+
+    fetch(url)
+    .then(res => res.text())
+    .then(html => {
+        document.getElementById("mainContent").innerHTML = html;
+
+        if (page === "expenses") {
+            loadExpensesTable();
+        }
+        if (page === "employees") {
+            setTimeout(() => {
+                const sortSelect = document.getElementById("sortSelect");
+                if (sortSelect) {
+                    sortSelect.value = "emp_id";
+                    sortEmployees();
+                }
+            }, 100);
+        }
+    });
+}
+
+function loadExpensesTable() {
+    fetch("/get_expenses")
+    .then(res => res.json())
+    .then(expenses => {
+        let tableBody = document.getElementById("expenseTableBody");
+        tableBody.innerHTML = ""; 
+
+        expenses.forEach(exp => {
+            if (exp.status && exp.status.trim() === "Pending") {
+                let row = tableBody.insertRow();
+                
+                // Column 1: EMP ID
+                row.insertCell(0).innerHTML = `<b>${exp.emp_id}</b>`; 
+                row.insertCell(1).innerText = exp.name;
+                row.insertCell(2).innerText = exp.date; // Submission Date (DD-MM-YYYY)
+                row.insertCell(3).innerText = "₹" + exp.amount;
+                row.insertCell(4).innerText = exp.category;
+                
+                let statusCell = row.insertCell(5);
+                statusCell.innerHTML = `<span class="status-pending">${exp.status}</span>`;
+
+                // Proof Column with AI Scan
+                let proofCell = row.insertCell(6);
+                proofCell.innerHTML = exp.proof 
+                    ? `<button class="btn-ai-scan" onclick="viewProof('${exp.proof}', '${exp.date}', '${exp.amount}')">View & Scan</button>`
+                    : "No File";
+
+                let actionCell = row.insertCell(7);
+                actionCell.innerHTML = `
+                    <button class="btn-action btn-approve" onclick="approveExpense(${exp.id}, this)">Approve</button>
+                    <button class="btn-action btn-reject" onclick="rejectExpense(${exp.id}, this)">Reject</button>
+                `;
+            }
+        });
+    });
+}
+
+// Inside Manager.html - update the approveExpense function
+function approveExpense(id, btn){
+    fetch("/update_status", {
+        method: "POST",
+        headers: {"Content-Type":"application/json"},
+        body: JSON.stringify({
+            id: id,
+            status: "Approved",
+            comment: ""
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if(data.success) {
+            btn.closest("tr").remove(); // Only removes if the backend saved correctly
+            loadStats();
+        } else {
+            alert("Save failed. Please try again.");
+        }
+    });
+}
+
+function rejectExpense(id, btn) {
+    let reason = prompt("Enter reason for rejection:");
+
+    if (!reason) {
+        alert("A rejection reason is required.");
+        return;
+    }
+
+    fetch("/update_status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            id: parseInt(id),
+            status: "Rejected",
+            comment: reason
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            btn.closest("tr").remove();
+            loadStats();
+        }
+    });
+}
+
+function updateStatus(id, status) {
+
+    fetch("/update_status", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ id: id, status: status })
+    })
+    .then(res => res.json())
+    .then(data => {
+        loadPage('expenses');
+        loadStats();
+    });
+}
+
+function updateEmployee(id, action) {
+
+    fetch("/update_employee", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: "id=" + id + "&action=" + action
+    })
+    .then(res => res.json())
+    .then(data => {
+
+        // Reload manage employees partial
+        loadPage('employees');
+
+        // Update dashboard cards
+        loadStats();
+    });
+}
+
+function handleEmployeeAction(button) {
+    let id = button.getAttribute("data-id");
+    let action = button.getAttribute("data-action");
+
+    fetch("/update_employee", {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: "id=" + id + "&action=" + action
+    })
+    .then(res => res.json())
+    .then(data => {
+        loadPage('employees'); // Reload the list
+        loadStats();           // Refresh the badge count
+    });
+}
+
+function showEmployeeTab(tab) {
+    let empPage = document.getElementById("employeesPage");
+    let appPage = document.getElementById("approvalsPage");
+    let empBtn = document.getElementById("employeesTabBtn");
+    let appBtn = document.getElementById("approvalsTabBtn");
+
+    if (tab === "employees") {
+        // Show Active Team content
+        empPage.style.display = "block";
+        appPage.style.display = "none";
+        
+        // Move the Green color to Active Team button
+        empBtn.classList.add("tab-active");
+        appBtn.classList.remove("tab-active");
+    } else {
+        // Show New Requests content
+        empPage.style.display = "none";
+        appPage.style.display = "block";
+        
+        // Move the Green color to New Requests button
+        appBtn.classList.add("tab-active");
+        empBtn.classList.remove("tab-active");
+    }
+}
+
+function viewEmployee(button) {
+    let id = button.getAttribute("data-id");
+
+    fetch("/employee_details/" + id)
+    .then(res => res.json())
+    .then(data => {
+        let e = data.employee;
+        let expenseRows = "";
+
+        // Build the table rows with the specific series you requested
+        data.expenses.forEach(exp => {
+            expenseRows += `
+                <tr>
+                    <td>${exp.category}</td>
+                    <td>₹${exp.amount}</td>
+                    <td>${exp.action_date}</td>
+                    <td style="
+                        color: ${
+                            exp.status === 'Approved' ? 'green' :
+                            exp.status === 'Rejected' ? 'red' : 'orange'
+                        };
+                        font-weight: bold;
+                    ">
+                        ${exp.status}
+                    </td>
+                </tr>
+            `;
+        });
+
+        // Update the UI with clear sections
+        document.getElementById("employeesPage").innerHTML = `
+            <div style="background: white; padding: 20px; border-radius: 8px; shadow: 0 2px 5px rgba(0,0,0,0.1);">
+                <h2>Employee Profile</h2>
+                <p><b>Employee ID:</b> ${e.emp_id}</p>
+                <p><b>Name:</b> ${e.name}</p>
+                <p><b>Email:</b> <span style="color:#2c5f9e;">${e.email}</span></p>
+                <p><b>Date of Joining:</b> ${e.date}</p>
+                
+                <hr>
+                
+                <h3>Expense Summary</h3>
+                <div style="display:flex; gap:40px; font-size:16px; margin-bottom:15px;">
+                    <div><b>Total Expenses:</b> ${data.total_uploaded}</div>
+                    <div style="color:green;"><b>Accepted:</b> ${data.accepted_count}</div>
+                    <div style="color:red;"><b>Rejected:</b> ${data.rejected_count}</div>
+                </div>
+
+                <hr>
+
+                <h3>Expense Details</h3>
+                <table border="1" width="100%" style="border-collapse:collapse; margin-top:10px; text-align:center;">
+                    <tr style="background:#4CAF50; color:white;">
+                        <th>Category</th>
+                        <th>Amount</th>
+                        <th>Action Date</th>
+                        <th>Status</th>
+                    </tr>
+                    ${expenseRows}
+                </table>
+
+                <br>
+                <button style="background:#2c3e50; color:white; padding:10px 20px; border:none; border-radius:5px; cursor:pointer;" 
+                        onclick="loadPage('employees')">
+                    Back to List
+                </button>
+            </div>
+        `;
+    });
+}
+
+function deleteEmployee(button) {
+
+    let id = button.getAttribute("data-id");
+
+    if (confirm("Are you sure you want to delete this employee?")) {
+
+        fetch("/delete_employee", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: "id=" + id
+        })
+        .then(res => res.json())
+        .then(data => {
+            loadPage('employees');
+            loadStats();
+        });
+    }
+}
+
+function filterEmployees() {
+
+    let input = document.getElementById("searchInput").value.toLowerCase();
+    let rows = document.querySelectorAll("#employeesTable tbody tr");
+
+    rows.forEach(row => {
+
+        let name = row.getAttribute("data-name");
+        let empid = row.getAttribute("data-empid");
+
+        if (input === "") {
+            row.style.display = "";
+        }
+        else if (
+            name.includes(input) ||
+            empid.toLowerCase().includes(input)
+        ) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
+
+function sortEmployees() {
+    let table = document.getElementById("employeesTable");
+    if (!table) return;
+
+    let tbody = table.querySelector("tbody"); 
+    let rows = Array.from(tbody.querySelectorAll("tr[data-name]"));
+    let sortType = document.getElementById("sortSelect").value;
+
+    rows.sort((a, b) => {
+        if (sortType === "name") {
+            return a.getAttribute("data-name").localeCompare(b.getAttribute("data-name"));
+        }
+        if (sortType === "emp_id") {
+            // Extracts the number from "EM01" to sort numerically (1, 2, 10...)
+            let idA = parseInt(a.getAttribute("data-empid").replace(/\D/g, ''));
+            let idB = parseInt(b.getAttribute("data-empid").replace(/\D/g, ''));
+            return idA - idB;
+        }
+    });
+
+    rows.forEach(row => tbody.appendChild(row));
+}
+
+function filterPastExpenses() {
+    const searchText = document.getElementById("pastSearch").value.toLowerCase();
+    const statusFilter = document.getElementById("pastStatusFilter").value;
+    const categoryFilter = document.getElementById("pastCategoryFilter").value;
+
+    const rows = document.querySelectorAll(".past-row");
+
+    rows.forEach(row => {
+        const name = row.getAttribute("data-name");
+        const id = row.getAttribute("data-id");
+        const status = row.getAttribute("data-status");
+        const category = row.getAttribute("data-cat");
+
+        const matchesSearch = name.includes(searchText) || id.includes(searchText);
+        const matchesStatus = (statusFilter === "all") || (status === statusFilter);
+        
+        // Category matching logic
+        let matchesCategory = (categoryFilter === "all");
+        if (!matchesCategory) {
+            // Checks if the table category matches the filter or starts with "Other:"
+            if (categoryFilter === "Others") {
+                matchesCategory = category.startsWith("Other:") || category === "Others";
+            } else {
+                matchesCategory = (category === categoryFilter);
+            }
+        }
+
+        if (matchesSearch && matchesStatus && matchesCategory) {
+            row.style.display = "";
+        } else {
+            row.style.display = "none";
+        }
+    });
+}
+
+function viewProof(filename, submissionDate, submittedAmount) {
+    const modal = document.createElement('div');
+    modal.id = "proofModal";
+    modal.style = "position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:10000; display:flex; align-items:center; justify-content:center; color:white;";
+
+    modal.innerHTML = `
+        <div style="background:white; padding:25px; border-radius:15px; text-align:center; max-width:85%; color:#333; overflow-y:auto; max-height:90vh;">
+            <h2 style="color:#2c3e50;">Bill Verification</h2>
+            <img id="scannableImage" src="/uploads/${filename}" style="max-height:50vh; border:2px solid #eee; margin-bottom:15px;">
+            <canvas id="qrCanvas" style="display:none;"></canvas>
+            
+            <div id="scanResult" style="padding:15px; border-radius:8px; background:#f8f9fa; margin-bottom:15px; text-align:left; font-size:14px;">
+            </div>
+
+            <div style="display:flex; gap:15px; justify-content:center;">
+                <button onclick="closeProof()" style="background:#e74c3c; padding:10px 25px; border:none; border-radius:8px; cursor:pointer; color:white;">Close</button>
+                <button id="scanBtn" onclick="performFullScan('${submissionDate}', '${submittedAmount}')" style="background:#27ae60; padding:10px 25px; border:none; border-radius:8px; cursor:pointer; color:white; font-weight:bold;">Run AI Validation</button>
+            </div>
+        </div>
+    `;
+    document.body.appendChild(modal);
+}
+
+function closeProof() {
+    const modal = document.getElementById("proofModal");
+    if (modal) modal.remove();
+}
+async function performFullScan(subDateStr, subAmount) {
+    const resultDiv = document.getElementById("scanResult");
+    const img = document.getElementById("scannableImage");
+    const btn = document.getElementById("scanBtn");
+    
+    btn.innerText = "Processing...";
+    btn.disabled = true;
+    resultDiv.innerHTML = "⏳ Initializing AI Engine...";
+
+    try {
+    // --- STEP 1: Barcode/QR Detection ---
+    const canvas = document.getElementById("qrCanvas");
+    const ctx = canvas.getContext("2d");
+    
+    // Ensure image is loaded before drawing to avoid "width is 0" errors
+    if (img.naturalWidth === 0) {
+        throw new Error("Image not fully loaded. Please wait a second and Re-Scan.");
+    }
+
+    canvas.width = img.naturalWidth;
+    canvas.height = img.naturalHeight;
+    ctx.drawImage(img, 0, 0);
+    
+    // Get raw pixel data for jsQR
+    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    const code = jsQR(imageData.data, imageData.width, imageData.height);
+    
+    // Logic to handle the QR result
+    let barcodeInfo;
+    if (code) {
+        barcodeInfo = `✅ <span style="color:green">QR/Barcode Detected:</span> <br><b>${code.data}</b>`;
+    } else {
+        barcodeInfo = `🚫 <span style="color:orange">No QR or Barcode found on this bill.</span>`;
+    }
+
+        // --- STEP 2: Text Extraction (OCR) ---
+        resultDiv.innerHTML = "📝 Reading Text from Bill...";
+        
+        const worker = Tesseract.createWorker();
+        await worker.load();
+        await worker.loadLanguage('eng');
+        await worker.initialize('eng');
+        
+        const { data: { text } } = await worker.recognize(img.src);
+        await worker.terminate();
+
+        // --- STEP 3: Logic Validation (Date & Amount) ---
+        const cleanAmt = subAmount.replace(/[^0-9.]/g, '');
+        const amountFound = text.includes(cleanAmt);
+        
+        // Date Regex to find DD-MM-YYYY
+        const datePattern = /(\d{2}-\d{2}-\d{4})/;
+        const foundDate = text.match(datePattern);
+        let dateStatus = "⚠️ Date Not Clear";
+
+        if (foundDate) {
+            // Split strings to create Date objects: [DD, MM, YYYY]
+            const bParts = foundDate[0].split('-'); 
+            const sParts = subDateStr.split('-');   
+            
+            // JavaScript months are 0-indexed (January is 0)
+            const bDate = new Date(bParts[2], bParts[1] - 1, bParts[0]);
+            const sDate = new Date(sParts[2], sParts[1] - 1, sParts[0]);
+
+            // Validation Logic
+            const isSameMonth = (bDate.getMonth() === sDate.getMonth() && bDate.getFullYear() === sDate.getFullYear());
+            const isLastMonth = (bDate.getMonth() === sDate.getMonth() - 1 || (bDate.getMonth() === 11 && sDate.getMonth() === 0));
+            const isWithinGracePeriod = sDate.getDate() <= 10;
+
+            if (isSameMonth) {
+                dateStatus = `✅ <span style="color:green">Current Month Bill: ${foundDate[0]}</span>`;
+            } else if (isLastMonth && isWithinGracePeriod) {
+                dateStatus = `✅ <span style="color:green">Last Month Bill (Grace Period): ${foundDate[0]}</span>`;
+            } else if (isLastMonth && !isWithinGracePeriod) {
+                dateStatus = `❌ <span style="color:red">Expired: Last month bills only valid until the 10th.</span>`;
+            } else {
+                dateStatus = `❌ <span style="color:red">Invalid: Bill date ${foundDate[0]} is too old.</span>`;
+            }
+        }
+
+        // --- STEP 4: Update UI ---
+    resultDiv.innerHTML = `
+        <div style="border-bottom:1px solid #ddd; padding-bottom:10px; margin-bottom:10px; line-height:1.5;">
+            ${barcodeInfo}
+        </div>
+        <div style="margin-bottom:10px;">
+            ${amountFound ? "✅ <span style='color:green'>Amount Match</span>" : "❌ <span style='color:red'>Amount Mismatch</span>"}
+        </div>
+        <div>${dateStatus}</div>
+    `;
+
+    } catch (err) {
+        console.error(err);
+        resultDiv.innerHTML = `<span style="color:red;">❌ Scan Failed: ${err.message}</span>`;
+    } finally {
+        btn.innerText = "Re-Scan";
+        btn.disabled = false;
+    }
+}
+
+// Add these at the start of your script block
+const tesseractScript = document.createElement('script');
+tesseractScript.src = 'https://unpkg.com/tesseract.js@v2.1.0/dist/tesseract.min.js';
+document.head.appendChild(tesseractScript);
+
+const qrScript = document.createElement('script');
+qrScript.src = 'https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js';
+document.head.appendChild(qrScript);
+
+// Initial load
+loadStats();
+loadPage("home");
+
+</script>
+
+</body>
+</html>

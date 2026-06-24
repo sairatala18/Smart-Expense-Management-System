@@ -1,0 +1,111 @@
+<style>
+    /* Main Container */
+    .home-container {
+        display: flex;
+        flex-direction: column;
+        gap: 25px;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    /* Welcome Hero Section */
+    .welcome-hero {
+        background: linear-gradient(135deg, #2c3e50, #34495e);
+        color: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        text-align: left;
+    }
+
+    .welcome-hero h1 {
+        margin: 0;
+        font-size: 36px;
+        font-weight: 700;
+    }
+
+    .welcome-hero p {
+        margin-top: 10px;
+        font-size: 18px;
+        opacity: 0.9;
+    }
+
+    /* Quick Action Cards */
+    .action-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+    }
+
+    .action-card {
+        background: white;
+        padding: 25px;
+        border-radius: 12px;
+        border-left: 5px solid #4CAF50;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+
+    .action-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    }
+
+    .action-card h3 {
+        margin: 0 0 10px 0;
+        color: #2c3e50;
+    }
+
+    .action-card p {
+        margin: 0;
+        color: #7f8c8d;
+        font-size: 14px;
+        line-height: 1.5;
+    }
+
+    /* Info Section */
+    .status-banner {
+        background: #e8f5e9;
+        border: 1px solid #c8e6c9;
+        padding: 15px 25px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        color: #2e7d32;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+
+<div class="home-container">
+    <div class="welcome-hero">
+        <h1>Welcome back, Manager 👋</h1>
+        <p>Leadership is an action, not a position</p>
+    </div>
+
+    <div class="status-banner">
+        <span style="font-size: 20px;">ℹ️</span>
+        <span>You have pending tasks that require your attention. Check the sidebar notifications.</span>
+    </div>
+
+    <div class="action-grid">
+        <div class="action-card" onclick="loadPage('expenses')">
+            <h3>Verify Expenses</h3>
+            <p>Review new receipts and claims submitted by employees today.</p>
+        </div>
+
+        <div class="action-card" style="border-left-color: #2196F3;" onclick="loadPage('employees')">
+            <h3>Onboard Staff</h3>
+            <p>Approve or reject new registration requests from the team.</p>
+        </div>
+
+        <div class="action-card" style="border-left-color: #f39c12;" onclick="loadPage('past')">
+            <h3>Review History</h3>
+            <p>Analyze past expense trends and archived records.</p>
+        </div>
+    </div>
+</div>

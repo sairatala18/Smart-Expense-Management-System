@@ -1,0 +1,131 @@
+<div class="admin-container">
+    <div class="welcome-hero" style="background: linear-gradient(135deg, #2d3748, #4a5568); margin-bottom: 25px; padding: 25px; border-radius: 12px;">
+        <h2 style="margin:0; color:white;">Financial History</h2>
+    </div>
+
+    <div class="filter-flex-container">
+        <div class="filter-group" style="flex: 2;">
+            <input type="text" id="pastSearch" class="filter-input" placeholder="Search Name or EMP ID..." onkeyup="filterPastExpenses()">
+        </div>
+
+        <div class="filter-group">
+            <select id="pastStatusFilter" class="filter-input" onchange="filterPastExpenses()">
+                <option value="all">All Status</option>
+                <option value="Approved">Approved</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+        </div>
+
+        <div class="filter-group">
+            <select id="pastCategoryFilter" class="filter-input" onchange="filterPastExpenses()">
+                <option value="all">All Categories</option>
+                <option value="Travel Charges">Travel Charges</option>
+                <option value="Food">Food</option>
+                <option value="Home Rental">Home Rental</option>
+                <option value="Medical Bills">Medical Bills</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Office Supplies">Office Supplies</option>
+                <option value="Others">Others</option>
+            </select>
+        </div>
+
+        <button onclick="loadPage('past')" class="btn-reset">Reset Filters</button>
+    </div>
+
+    <div class="box" style="padding:0; overflow:hidden; border-radius: 12px;">
+        <table id="pastExpensesTable">
+            <thead>
+                <tr style="background: #2d3748; color: white;">
+                    <th>Emp Id</th>
+                    <th>Name</th>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Action Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for exp in expenses %}
+                <tr class="past-row" 
+                    data-name="{{ exp[1] | lower }}" 
+                    data-id="{{ exp[0] | lower }}" 
+                    data-status="{{ exp[6] }}" 
+                    data-cat="{{ exp[4] }}">
+                    <td><b>{{ exp[0] }}</b></td>
+                    <td>{{ exp[1] }}</td>
+                    <td>{{ exp[2] }}</td>
+                    <td><b style="color:#2d3748;">₹{{ exp[3] }}</b></td>
+                    <td><span class="category-tag">{{ exp[4] }}</span></td>
+                    <td>
+                        <span class="status-{% if exp[6] == 'Approved' %}approved{% else %}rejected{% endif %}">
+                            {{ exp[6] }}
+                        </span>
+                    </td>
+                    <td style="color:#718096; font-size: 13px;">{{ exp[7] }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<style>
+    .filter-flex-container {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        background: white;
+        padding: 15px 20px;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        margin-bottom: 20px;
+    }
+
+    .filter-group {
+        flex: 1;
+        min-width: 120px;
+    }
+
+    .filter-input {
+        width: 100%;
+        padding: 10px 12px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 14px;
+        color: #4a5568;
+        outline: none;
+        transition: border-color 0.2s;
+    }
+
+    .filter-input:focus {
+        border-color: #3182ce;
+    }
+
+    .btn-reset {
+        background: #f7fafc;
+        color: #4a5568;
+        padding: 10px 20px;
+        border: 1px solid #e2e8f0;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        font-size: 14px;
+        white-space: nowrap;
+        transition: all 0.2s;
+    }
+
+    .btn-reset:hover {
+        background: #edf2f7;
+        border-color: #cbd5e0;
+    }
+
+    .category-tag {
+        background: #ebf8ff;
+        color: #2b6cb0;
+        padding: 4px 10px;
+        border-radius: 15px;
+        font-size: 12px;
+        font-weight: 600;
+    }
+</style>

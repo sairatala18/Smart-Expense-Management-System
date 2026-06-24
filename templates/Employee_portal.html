@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Portal</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: linear-gradient(135deg, #4CAF50, #2196F3);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box {
+            text-align: center;
+        }
+
+        button {
+            width: 220px;
+            padding: 15px;
+            margin: 15px;
+            font-size: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            color: white;
+        }
+
+        .login-btn {
+            background: #2196F3;
+        }
+
+        .register-btn {
+            background: #4CAF50;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2 style="color:white;">Employee Portal</h2>
+
+    <button class="login-btn" onclick="location.href='/employee_login'">
+        Login
+    </button>
+
+    <button class="register-btn" onclick="location.href='/employee_register'">
+        Create Account
+    </button>
+</div>
+
+</body>
+</html>

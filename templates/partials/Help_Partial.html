@@ -1,0 +1,99 @@
+<div class="onboarding-container">
+    <div class="onboarding-header">
+        <div class="header-text">
+            <h1>Manager Command Center</h1>
+            <p>Welcome! Follow this guide to master employee oversight and expense auditing.</p>
+        </div>
+        <div class="system-status">
+            <div class="status-pill">
+                <span class="pulse-dot"></span> 
+                Database: <b>employees.csv</b> Connected
+            </div>
+            <div class="status-pill">
+                <span class="pulse-dot blue"></span> 
+                Mail Server: <b>SMTP Active</b>
+            </div>
+        </div>
+    </div>
+
+    <div class="onboarding-grid">
+        <div class="guide-card">
+            <div class="step-number">01</div>
+            <h3>Employee Onboarding</h3>
+            <p>Manage the lifecycle of your team members from registration to approval.</p>
+            <div class="feature-tag">Requires Action</div>
+            <ul class="guide-list">
+                <li><b>Pending:</b> New users waiting for your verification.</li>
+                <li><b>Approved:</b> System assigns a unique <b>EM-Code</b> for login.</li>
+                <li><b>Rejected:</b> User access is permanently denied.</li>
+            </ul>
+        </div>
+
+        <div class="guide-card">
+            <div class="step-number">02</div>
+            <h3>Expense Auditing</h3>
+            <p>Review and process reimbursement requests with digital proof.</p>
+            <div class="feature-tag info">Live Tracking</div>
+            <ul class="guide-list">
+                <li><b>Receipt Check:</b> View uploaded images/PDFs before approving.</li>
+                <li><b>Status Flow:</b> Pending → Approved/Rejected → Past Expenses.</li>
+                <li><b>Comments:</b> Always add a reason when rejecting an expense.</li>
+            </ul>
+        </div>
+
+        <div class="guide-card">
+            <div class="step-number">03</div>
+            <h3>Security & Recovery</h3>
+            <p>How the system protects data and handles forgotten passwords.</p>
+            <div class="feature-tag secure">Encrypted OTP</div>
+            <ul class="guide-list">
+                <li><b>OTP Logic:</b> 6-digit codes sent via 241fd01114@gmail.com.</li>
+                <li><b>Identity:</b> Reset emails include the user's <b>EM-Code</b>.</li>
+                <li><b>Session:</b> Codes expire once the password is successfully updated.</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="manager-pro-tips">
+        <div class="tip-icon">💡</div>
+        <div class="tip-content">
+            <h4>Quick Troubleshooting for New Managers</h4>
+            <p>If an employee cannot log in after approval, ensure they are using their <b>Full Name</b> or <b>Email</b> exactly as registered. For password issues, the OTP is sent to the address in the 6th column of your database.</p>
+        </div>
+    </div>
+
+    <style>
+        .onboarding-container { padding: 40px; background: #fcfcfd; animation: fadeIn 0.6s ease; color: #2d3748; }
+        
+        /* Header & Status */
+        .onboarding-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; border-bottom: 2px solid #edf2f7; padding-bottom: 20px; }
+        .header-text h1 { font-size: 28px; margin: 0; color: #1a202c; }
+        .system-status { display: flex; gap: 10px; }
+        .status-pill { background: white; border: 1px solid #e2e8f0; padding: 8px 15px; border-radius: 20px; font-size: 12px; display: flex; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .pulse-dot { height: 8px; width: 8px; background: #48bb78; border-radius: 50%; margin-right: 10px; box-shadow: 0 0 0 rgba(72, 187, 120, 0.4); animation: pulse 2s infinite; }
+        .pulse-dot.blue { background: #4299e1; }
+
+        /* Guide Cards */
+        .onboarding-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .guide-card { background: white; padding: 30px; border-radius: 20px; border: 1px solid #e2e8f0; position: relative; transition: 0.3s; }
+        .guide-card:hover { transform: translateY(-5px); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .step-number { position: absolute; top: 20px; right: 25px; font-size: 40px; font-weight: 800; color: #edf2f7; z-index: 1; }
+        .guide-card h3 { position: relative; z-index: 2; margin-top: 0; color: #2b6cb0; }
+        
+        .feature-tag { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: bold; text-transform: uppercase; margin: 10px 0 20px 0; background: #fff5f5; color: #c53030; }
+        .feature-tag.info { background: #ebf8ff; color: #2b6cb0; }
+        .feature-tag.secure { background: #f0fff4; color: #2f855a; }
+
+        .guide-list { padding: 0; list-style: none; }
+        .guide-list li { padding: 10px 0; border-top: 1px solid #f7fafc; font-size: 14px; color: #4a5568; line-height: 1.5; }
+
+        /* Pro Tips */
+        .manager-pro-tips { margin-top: 50px; display: flex; align-items: center; background: #2d3748; color: white; padding: 25px; border-radius: 15px; }
+        .tip-icon { font-size: 40px; margin-right: 25px; }
+        .tip-content h4 { margin: 0 0 5px 0; color: #f6ad55; }
+        .tip-content p { margin: 0; font-size: 14px; opacity: 0.9; }
+
+        @keyframes pulse { 0% { box-shadow: 0 0 0 0 rgba(72, 187, 120, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(72, 187, 120, 0); } 100% { box-shadow: 0 0 0 0 rgba(72, 187, 120, 0); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+    </style>
+</div>

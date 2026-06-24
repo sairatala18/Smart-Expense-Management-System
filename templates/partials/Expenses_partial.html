@@ -1,0 +1,51 @@
+<div class="admin-container">
+    <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+        
+        <h2 style="margin: 0; color: #2c3e50;">Pending Expense Reviews</h2>
+    </div>
+
+    <table id="expenseTable">
+        <thead>
+            <tr style="background: #2d3748; color: white;">
+                <th> Emp ID</th>
+                <th>Employee</th>
+                <th>Date</th>
+                <th>Amount</th>
+                <th>Category</th>
+                <th>Status</th>
+                <th>Proof</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody id="expenseTableBody">
+            </tbody>
+    </table>
+</div>
+
+<style>
+    #expenseTable {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 8px;
+        overflow: hidden;
+    }
+    #expenseTable th, #expenseTable td {
+        padding: 12px 15px;
+        border-bottom: 1px solid #edf2f7;
+        text-align: center;
+    }
+    .btn-ai-scan {
+        background: #3182ce;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.2s;
+    }
+    .btn-ai-scan:hover {
+        background: #2b6cb0;
+    }
+</style>

@@ -1,0 +1,12 @@
+EM01,R Sai Kiran ,2026-03-20,8285,Electronics,proof_1.jpeg,Approved,20-03-2026,
+EM01,R Sai Kiran ,2026-03-20,45000,Electronics,proof_2.jpeg,Rejected,20-03-2026,Amount details mismatch.
+EM02,Y Naga Srinivas ,2026-03-21,19074,Electronics,proof_3.jpeg,Approved,21-03-2026,,127f99252363495dc497fff42ff6c0d9
+EM02,Y Naga Srinivas ,2026-03-21,8285,Electronics,proof_1.jpeg,Rejected,21-03-2026,Expire proof !,ed45171541ce95bfa74a93167c5a3924
+EM01,R Sai Kiran ,2026-03-21,999,Office Supplies,20260321130103_proof_2.jpeg,Rejected,21-03-2026,Expire Proof !,84d43b06c1be5275641a5cdb65729830
+EM01,R Sai Kiran ,2026-04-04,10,Travel Charges,20260404114609_proof_5.pdf,Rejected,15-04-2026,Fake Proof !,11503efeace09775bed1138920477c57,2
+EM01,R Sai Kiran ,2026-04-04,10,Travel Charges,20260404120927_Bill.jpeg,Approved,09-04-2026,,ea9882971e137c50203f3f5b0f7d2d77
+EM01,R Sai Kiran ,2026-04-09,363,Office Supplies,20260409103538_Bill2.jpeg,Approved,10-04-2026,,4a2e662679b7decd1dd4ce76831187d2
+EM03,R Anusha,2026-04-09,183,Office Supplies,20260409110833_Bill3.jpeg,Approved,09-04-2026,,dc09cbfe544bbc91e0638bd9cf2037f4
+EM03,R Anusha,2026-04-15,581,Office Supplies,20260415104352_Bill1.jpeg,Rejected,27-04-2026,Duplicate proof,a683155e20762e9613e90cc3afa807d5,2
+EM01,R Sai Kiran ,2026-04-29,124,Office Supplies,20260429142028_bill4.jpeg,Rejected,29-04-2026,Expire proof (Please check the date),f278f664d26ca44b258a65351fd02f65,1
+EM01,R Sai Kiran ,2026-05-08,147,Office Supplies,20260508112520_BILL.png,Pending,,,bc5b5c8190503dc88ee990628f71b783,0

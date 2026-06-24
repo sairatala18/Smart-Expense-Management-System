@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Employee Dashboard</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f0f4f8;
+            margin: 0;
+            color: #333;
+        }
+
+        /* Header & Navbar */
+        .header {
+            background: #2c5f9e;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .navbar {
+            display: flex;
+            background: #34495e;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-item {
+            flex: 1;
+            text-align: center;
+            padding: 15px;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+        /* Employee Nav Active Style */
+        .nav-item.active {
+            background: #2c3e50 !important; /* Darker shade to show selection */
+            border-bottom: 4px solid #27ae60 !important; /* Green bottom bar */
+            color: #27ae60 !important;
+            font-weight: bold;
+        }
+
+        /* Ensure the dot doesn't break alignment */
+        .nav-item {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-item:hover {
+            background: #2c3e50;
+            border-bottom: 3px solid #27ae60;
+        }
+
+        /* Container for all pages */
+        .page-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 20px;
+            display: none; /* Hidden by default */
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        /* Home Page Dashboard Design */
+        .welcome-section {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+            border-left: 6px solid #2c5f9e;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: 0.3s;
+        }
+
+        .stat-card:hover { transform: translateY(-5px); }
+        .stat-card h3 { margin: 0; font-size: 32px; color: #2c3e50; }
+        .stat-card p { margin: 5px 0 0; color: #95a5a6; font-size: 12px; font-weight: bold; }
+
+        .total-card { border-bottom: 4px solid #3498db; }
+        .approved-card { border-bottom: 4px solid #27ae60; }
+        .rejected-card { border-bottom: 4px solid #e74c3c; }
+        .pending-card { border-bottom: 4px solid #f39c12; }
+
+        /* Forms and Tables */
+        .box {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .submit-btn {
+            background: #27ae60;
+            color: white;
+            padding: 12px 40px;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            display: block;
+            margin: 0 auto;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover { background: #1e8449; }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th { background: #2c5f9e; color: white; padding: 15px; }
+        td { padding: 15px; border: 1px solid #eee; text-align: center; }
+
+        .dot {
+            height: 10px;
+            width: 10px;
+            background: red;
+            border-radius: 50%;
+            display: none;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Employee Dashboard</h1>
+</div>
+
+<div class="navbar">
+    <div id="nav-home" onclick="showPage('home')" class="nav-item">Home</div>
+    <div id="nav-submit" onclick="showPage('submit')" class="nav-item">Submit Expense</div>
+    <div id="nav-past" onclick="showPage('past')" class="nav-item">
+        Past Expenses <span id="dot-expense" class="dot"></span>
+    </div>
+    <div id="nav-help" onclick="showPage('help')" class="nav-item">Help</div>
+    <div onclick="logout()" class="nav-item">Logout</div>
+</div>
+
+<div id="homePage" class="page-container">
+    <div class="welcome-section">
+        <h2 style="margin:0;">Hello, <span id="welcomeName" style="color:#2c5f9e;">{{ emp_name }}</span>! 👋</h2>
+        <p style="color:#7f8c8d;">Welcome back. Here is your expense status overview.</p>
+    </div>
+
+    <div class="stats-grid">
+        <div class="stat-card total-card"><h3 id="stat-total">0</h3><p>Total Claims</p></div>
+        <div class="stat-card approved-card"><h3 id="stat-approved">0</h3><p>Approved</p></div>
+        <div class="stat-card rejected-card"><h3 id="stat-rejected">0</h3><p>Rejected</p></div>
+        <div class="stat-card pending-card"><h3 id="stat-pending">0</h3><p>Pending</p></div>
+    </div>
+</div>
+
+<div id="submitPage" class="page-container">
+    <div class="box">
+        <h2 style="text-align:center; color:#2c3e50;">Submit Expense</h2>
+        <label>Employee ID</label>
+        <input type="text" id="emp_id" value="{{ emp_id }}" readonly>
+
+        <label>Employee Name</label>
+        <input type="text" id="emp_name" value="{{ emp_name }}" readonly>
+
+        <label>Date</label>
+        <input type="date" id="date">
+
+        <label>Amount</label>
+        <input type="number" id="amount" placeholder="Enter amount">
+        
+        <label>Category</label>
+        <select id="category">
+            <option value="">Select Category</option>
+            <option>Travel Charges</option>
+            <option>Food</option>
+            <option>Home Rental</option>
+            <option>Medical Bills</option>
+            <option>Office Supplies</option>
+            <option>Electronics</option>
+            <option>Others</option>
+        </select>
+
+        <div id="otherCommentGroup" style="display: none;">
+            <label>Please specify category details</label>
+            <input type="text" id="other_comment" placeholder="e.g. Internet Bill, Client Gift">
+        </div>
+
+        <label>Upload Proof</label>
+        <input type="file" id="proof" accept=".jpg,.jpeg,.png,.pdf">    
+        
+        <button class="submit-btn" onclick="submitExpense()">Submit Expense</button>
+    </div>
+</div>
+
+<div id="pastPage" class="page-container">
+    <div class="box" style="max-width: 100%;">
+        <h3>My Submitted Expenses</h3>
+        <table id="myExpenses">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Amount</th>
+                    <th>Category</th>
+                    <th>Status</th>
+                    <th>Comment</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="expenseTableBody">
+                </tbody>
+        </table>
+    </div>
+</div>
+
+<div id="helpPage" class="page-container">
+    <div class="box">
+        <h3>User Guide</h3>
+        <p>1. Use <b>Submit Expense</b> to send new claims to your manager.</p>
+        <p>2. View status updates in <b>Past Expenses</b>.</p>
+        <p>3. If a claim is rejected, check the <b>Comment</b> column for feedback.</p>
+    </div>
+</div>
+
+<script>
+function showPage(page) {
+    // 1. Hide all page containers
+    document.querySelectorAll('.page-container').forEach(div => div.style.display = "none");
+
+    // 2. Remove 'active' class from all nav items
+    document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+    // 3. Add 'active' class to the current nav item
+    const activeNav = document.getElementById('nav-' + page);
+    if (activeNav) {
+        activeNav.classList.add('active');
+    }
+
+    // 4. Show the selected page and load its data
+    if (page === "home") {
+        document.getElementById("homePage").style.display = "block";
+        loadHomeStats();
+    } else if (page === "submit") {
+        document.getElementById("submitPage").style.display = "block";
+    } else if (page === "past") {
+        document.getElementById("pastPage").style.display = "block";
+        loadExpensesTable();
+    } else if (page === "help") {
+        document.getElementById("helpPage").style.display = "block";
+    }
+}
+
+function loadHomeStats() {
+    const empId = document.getElementById("emp_id").value;
+    fetch("/get_expenses")
+    .then(res => res.json())
+    .then(expenses => {
+        let total = 0, approved = 0, rejected = 0, pending = 0;
+        expenses.forEach(exp => {
+            if (exp.emp_id === empId) {
+                total++;
+                if (exp.status === "Approved") approved++;
+                else if (exp.status === "Rejected") rejected++;
+                else pending++;
+            }
+        });
+        document.getElementById("stat-total").innerText = total;
+        document.getElementById("stat-approved").innerText = approved;
+        document.getElementById("stat-rejected").innerText = rejected;
+        document.getElementById("stat-pending").innerText = pending;
+    });
+}
+
+function loadExpensesTable() {
+    const empId = document.getElementById("emp_id").value;
+    fetch("/get_expenses")
+    .then(res => res.json())
+    .then(expenses => {
+        const tbody = document.getElementById("expenseTableBody");
+        tbody.innerHTML = "";
+        expenses.forEach(exp => {
+            if (exp.emp_id === empId) {
+                let row = tbody.insertRow();
+                row.insertCell(0).innerText = exp.date;
+                row.insertCell(1).innerText = "₹" + exp.amount;
+                row.insertCell(2).innerText = exp.category;
+                
+                let statusCell = row.insertCell(3);
+                statusCell.style.fontWeight = "bold";
+                statusCell.style.color = exp.status === "Approved" ? "green" : exp.status === "Rejected" ? "red" : "orange";
+                statusCell.innerText = exp.status;
+
+                row.insertCell(4).innerText = exp.comment || "-";
+
+                // 🔥 Recheck Button Logic
+                let actionCell = row.insertCell(5);
+
+                if (exp.status === "Rejected" && parseInt(exp.rejection_count) === 1) {
+                    actionCell.innerHTML = `<button onclick="recheckExpense(${exp.id})">Recheck</button>`;
+                } else {
+                    actionCell.innerHTML = "-";
+                }
+            }
+        });
+    });
+}
+
+function submitExpense() {
+    let category = document.getElementById("category").value;
+    const otherComment = document.getElementById("other_comment").value;
+    const fileInput = document.getElementById("proof");
+
+    if (!document.getElementById("date").value || !document.getElementById("amount").value || !category) {
+        alert("Please fill all fields.");
+        return;
+    }
+
+    if (category === "Others" && otherComment.trim() !== "") {
+        category = "Other: " + otherComment;
+    } else if (category === "Others") {
+        alert("Please specify the category detail.");
+        return;
+    }
+
+    if (fileInput.files.length === 0) {
+        alert("Please upload a proof image.");
+        return;
+    }
+
+    let formData = new FormData();
+    // Use the actual values from inputs
+    formData.append("date", document.getElementById("date").value);
+    formData.append("amount", document.getElementById("amount").value);
+    formData.append("category", category);
+    formData.append("proof", fileInput.files[0]);
+
+    fetch("/add_expense", { method: "POST", body: formData })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert("Expense submitted successfully!");
+            // Clear form
+            document.getElementById("date").value = "";
+            document.getElementById("amount").value = "";
+            document.getElementById("category").value = "";
+            document.getElementById("proof").value = "";
+            showPage('home');
+        } else {
+            // Show the specific error (like "Duplicate Proof")
+            alert("Error: " + data.error);
+        }
+    })
+    .catch(err => {
+        console.error("Fetch error:", err);
+        alert("Server connection failed.");
+    });
+}
+
+function recheckExpense(id) {
+    if (!confirm("Do you want to reapply this expense?")) return;
+
+    fetch("/recheck_expense", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ id: id })
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            alert("Recheck submitted!");
+            loadExpensesTable();
+            loadHomeStats();
+        }
+    });
+}
+
+function toggleOtherComment() {
+    const category = document.getElementById("category").value;
+    const commentGroup = document.getElementById("otherCommentGroup");
+    
+    if (category === "Others") {
+        commentGroup.style.display = "block";
+    } else {
+        commentGroup.style.display = "none";
+        document.getElementById("other_comment").value = ""; // Clear if hidden
+    }
+}
+
+function logout() {
+    window.location.href = "/logout";
+}
+
+// Initial Load
+showPage('home');
+</script>
+
+</body>
+</html>

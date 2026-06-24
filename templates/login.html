@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ExpenseApp - Portal Gateway</title>
+    <style>
+        :root {
+            /* Unified Professional Palette */
+            --emerald: #10b981;
+            --emerald-glow: rgba(16, 185, 129, 0.4);
+            --charcoal: #111827;
+            --glass: rgba(255, 255, 255, 0.05);
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            /* Animated Deep Charcoal Gradient */
+            background: radial-gradient(circle at top left, #1a202c, #111827, #064e3b);
+            background-size: 400% 400%;
+            animation: gradientBG 12s ease infinite;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .header-text {
+            color: white;
+            text-align: center;
+            margin-bottom: 60px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .header-text h1 { 
+            font-size: 48px; 
+            margin: 0; 
+            letter-spacing: 4px; 
+            color: var(--emerald);
+            text-shadow: 0 0 20px var(--emerald-glow);
+        }
+        
+        .header-text p { 
+            opacity: 0.7; 
+            font-size: 18px; 
+            margin-top: 10px;
+            letter-spacing: 1px;
+        }
+
+        .btn-container {
+            display: flex;
+            gap: 40px;
+            perspective: 1200px; /* 3D Perspective */
+        }
+
+        .role-card {
+            width: 280px;
+            height: 340px;
+            background: var(--glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+        }
+
+        .icon-box {
+            font-size: 70px;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 0 10px rgba(255,255,255,0.2));
+            transition: transform 0.5s ease;
+        }
+
+        .role-name {
+            color: #f9fafb;
+            font-size: 22px;
+            font-weight: 800;
+            letter-spacing: 2px;
+            z-index: 2;
+            transition: color 0.3s;
+        }
+
+        /* Interactive Hover States */
+        .role-card:hover {
+            transform: translateY(-25px) rotateX(12deg) rotateY(5deg);
+            background: rgba(16, 185, 129, 0.08);
+            border-color: var(--emerald);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 30px var(--emerald-glow);
+        }
+
+        .role-card:hover .role-name {
+            color: var(--emerald);
+        }
+
+        .role-card:hover .icon-box {
+            transform: scale(1.15) translateZ(50px);
+        }
+
+        /* Emerald Glow Effect ring */
+        .role-card::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, var(--emerald-glow), transparent 70%);
+            top: 0; left: 0;
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .role-card:hover::before {
+            opacity: 0.2;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Mobile Layout */
+        @media (max-width: 700px) {
+            .btn-container { flex-direction: column; gap: 25px; }
+            .role-card { width: 320px; height: 160px; flex-direction: row; gap: 25px; }
+            .icon-box { margin-bottom: 0; font-size: 50px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header-text">
+    <h1>EXPENSE APP</h1>
+    <p>SECURE ENTERPRISE GATEWAY</p>
+</div>
+
+<div class="btn-container">
+    <div class="role-card" onclick="location.href='/employee_login'">
+        <div class="icon-box">👨‍💻</div>
+        <div class="role-name">EMPLOYEE</div>
+    </div>
+
+    <div class="role-card" onclick="location.href='/manager_login'">
+        <div class="icon-box">💼</div>
+        <div class="role-name">MANAGER</div>
+    </div>
+</div>
+
+<script>
+    // Logic remains clean to ensure fast redirect
+    function goEmployee() { window.location.href = "/employee_login"; }
+    function goManager() { window.location.href = "/manager_login"; }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Manager Login - ExpenseApp</title>
+    <style>
+        :root { --emerald: #059669; --charcoal: #0f172a; }
+        body {
+            margin: 0; font-family: 'Segoe UI', sans-serif;
+            background: #0f172a; height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+        }
+        .login-card {
+            background: #1e293b; padding: 45px;
+            border-radius: 30px; width: 360px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.6);
+            border-top: 5px solid var(--emerald);
+            text-align: center; color: white;
+        }
+        h2 { margin-bottom: 10px; font-size: 28px; }
+        p { color: #94a3b8; font-size: 14px; margin-bottom: 35px; }
+        input {
+            width: 100%; padding: 15px; margin-bottom: 20px;
+            background: #0f172a; border: 1px solid #334155;
+            border-radius: 12px; color: white; box-sizing: border-box;
+        }
+        input:focus { border-color: var(--emerald); outline: none; }
+        .btn-mgr {
+            width: 100%; padding: 15px; background: var(--emerald);
+            border: none; border-radius: 12px; color: white;
+            font-weight: 800; cursor: pointer; letter-spacing: 1px;
+            transition: 0.3s;
+        }
+        .btn-mgr:hover { background: #10b981; filter: brightness(1.1); }
+        .error { color: #ef4444; margin-top: 20px; font-size: 14px; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h2>Admin Access</h2>
+        <p>Please enter manager credentials</p>
+        <form method="POST">
+            <input type="text" name="username" placeholder="Manager Username" required>
+            <input type="password" name="password" placeholder="Admin Password" required>
+            <button type="submit" class="btn-mgr">LOGIN</button>
+        </form>
+        {% if error %}<div class="error">❌ {{ error }}</div>{% endif %}
+        <a href="/" style="display:block; margin-top:25px; color:#64748b; text-decoration:none; font-size:13px;">← Return to Gateway</a>
+    </div>
+</body>
+</html>
